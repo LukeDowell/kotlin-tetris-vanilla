@@ -3,20 +3,21 @@ package org.badgrades.tetris
 import org.badgrades.tetris.model.Block
 import org.badgrades.tetris.world.TetrisWorld
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Holds all of our game logic
  */
 class GameHandler(val tetrisWorld: TetrisWorld) {
 
-    /** the amount of time in seconds it takes for a block to drop one unit */
-    var gravityPeriod = 0.7f
+    /** the amount of time in milliseconds it takes for a block to drop one unit */
+    var gravityPeriod = 700
     var timeToDrop = 0L // wub wub wub
     var blockQueue: Queue<Block> = LinkedList<Block>()
-    var isRunning = false
 
     companion object {
         var score = 0
+        var isRunning = false
         const val TETRIS_SCORE_MULTIPLIER = 100
         const val QUEUE_SIZE = 40
     }
@@ -34,10 +35,11 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
     fun update(delta: Long) {
         // Drop block
         timeToDrop += delta
+
         if(timeToDrop >= gravityPeriod && isRunning) {
 
             if(canDrop(tetrisWorld.playerBlock)) {
-                tetrisWorld.playerBlock.move(0, -1)
+                tetrisWorld.playerBlock.move(0, 1)
             }
             else {
                 tetrisWorld.placedBlocks.add(tetrisWorld.playerBlock)
@@ -56,8 +58,6 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
             }
 
             timeToDrop = 0L
-        } else {
-            //TODO display paused message
         }
     }
 

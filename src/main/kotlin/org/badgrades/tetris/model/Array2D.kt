@@ -1,6 +1,7 @@
 package org.badgrades.tetris.model
 
 /**
+ * TODO remove this, its trash
  * http://stackoverflow.com/questions/28548647/create-generic-2d-array-in-kotlin
  */
 class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {

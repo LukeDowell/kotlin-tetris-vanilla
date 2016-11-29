@@ -36,7 +36,7 @@ class TetrisWorld {
         const val GRID_WIDTH = 10
         val STARTING_POSITION = Point(
                 Math.round(GRID_WIDTH.toDouble() / 2).toInt(), // Kind of gross to have all this conversion
-                GRID_HEIGHT - 1
+                1
         )
     }
 

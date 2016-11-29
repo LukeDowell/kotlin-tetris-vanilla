@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas
 import javafx.stage.Stage
 import org.badgrades.tetris.world.TetrisWorld
 import org.badgrades.tetris.world.WorldRenderer
+import java.util.concurrent.TimeUnit
 
 class TetrisGameApplication : Application() {
 
@@ -19,15 +20,16 @@ class TetrisGameApplication : Application() {
 
     init {
         canvas = Canvas(
-                (TetrisWorld.GRID_WIDTH * WorldRenderer.VISUAL_UNITS).toDouble(),
-                (TetrisWorld.GRID_HEIGHT * WorldRenderer.VISUAL_UNITS).toDouble()
+                TetrisWorld.GRID_WIDTH * WorldRenderer.VISUAL_UNITS,
+                TetrisWorld.GRID_HEIGHT * WorldRenderer.VISUAL_UNITS
         )
 
         tetrisWorld = TetrisWorld()
         gameHandler = GameHandler(tetrisWorld)
         inputHandler = InputHandler(gameHandler)
         renderer = WorldRenderer(tetrisWorld, canvas)
-        launch()
+
+        gameHandler.start()
     }
 
     override fun start(primaryStage: Stage?) {
@@ -42,7 +44,9 @@ class TetrisGameApplication : Application() {
         var lastUpdateTime = System.nanoTime()
         object : AnimationTimer() { // https://kotlinlang.org/docs/reference/object-declarations.html
             override fun handle(now: Long) {
-                val delta = lastUpdateTime - now
+                val delta = TimeUnit.MILLISECONDS.convert(
+                        now - lastUpdateTime,
+                        TimeUnit.NANOSECONDS)
 
                 gameHandler.update(delta)
                 renderer.render(delta)
@@ -50,12 +54,14 @@ class TetrisGameApplication : Application() {
                 lastUpdateTime = now
             }
         }.start()
+
+        primaryStage?.show()
     }
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            TetrisGameApplication()
+            launch(TetrisGameApplication::class.java)
         }
     }
 }

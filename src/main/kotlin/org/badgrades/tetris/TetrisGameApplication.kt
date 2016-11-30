@@ -41,6 +41,9 @@ class TetrisGameApplication : Application() {
 
         root.children.add(canvas)
 
+        gameScene.setOnKeyReleased { inputHandler.handleReleased(it) }
+        gameScene.setOnKeyPressed { inputHandler.handlePressed(it) }
+
         var lastUpdateTime = System.nanoTime()
         object : AnimationTimer() { // https://kotlinlang.org/docs/reference/object-declarations.html
             override fun handle(now: Long) {

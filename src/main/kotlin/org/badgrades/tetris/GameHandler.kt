@@ -11,13 +11,16 @@ import java.util.concurrent.TimeUnit
 class GameHandler(val tetrisWorld: TetrisWorld) {
 
     /** the amount of time in milliseconds it takes for a block to drop one unit */
-    var gravityPeriod = 700
+    var gravityPeriod = NORMAL_DROP_SPEED
     var timeToDrop = 0L // wub wub wub
     var blockQueue: Queue<Block> = LinkedList<Block>()
 
     companion object {
         var score = 0
         var isRunning = false
+
+        const val FAST_DROP_SPEED = 200
+        const val NORMAL_DROP_SPEED = 700
         const val TETRIS_SCORE_MULTIPLIER = 100
         const val QUEUE_SIZE = 40
     }

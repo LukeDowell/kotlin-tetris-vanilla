@@ -8,7 +8,6 @@ import org.badgrades.tetris.model.Block
 class WorldRenderer(val tetrisWorld: TetrisWorld, val canvas: Canvas) {
 
     companion object {
-        /** The value we use to convert from game units to visual units */
         const val VISUAL_UNITS = 32.0
     }
 
@@ -23,19 +22,34 @@ class WorldRenderer(val tetrisWorld: TetrisWorld, val canvas: Canvas) {
         )
 
         tetrisWorld.placedBlocks.forEach { drawBlock(g, it) }
-
         drawBlock(g, tetrisWorld.playerBlock)
     }
 
     fun drawBlock(g: GraphicsContext, block: Block) {
-        g.stroke = Color.BLACK
-        g.fill = block.blockType.color
+
+
         block.cells.forEach {
+            g.fill = block.blockType.color
             g.fillRect(
                     it.x * VISUAL_UNITS,
                     it.y * VISUAL_UNITS,
                     VISUAL_UNITS,
                     VISUAL_UNITS
+            )
+
+            g.stroke = Color.BLACK
+            g.strokeRect(
+                    it.x * VISUAL_UNITS,
+                    it.y * VISUAL_UNITS,
+                    VISUAL_UNITS,
+                    VISUAL_UNITS
+            )
+
+            g.fill = Color.WHITE
+            g.fillText(
+                    "${it.x} ${it.y}",
+                    it.x * VISUAL_UNITS,
+                    it.y * VISUAL_UNITS
             )
         }
     }

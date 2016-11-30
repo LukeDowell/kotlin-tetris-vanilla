@@ -136,7 +136,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         // Bounds
         block.cells.forEach {
             if(it.x > (TetrisWorld.GRID_WIDTH - 1)
-                    || it.y > TetrisWorld.GRID_HEIGHT
+                    || it.y > (TetrisWorld.GRID_HEIGHT - 1)
                     || it.x < 0)
                 return false
         }

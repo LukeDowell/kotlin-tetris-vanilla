@@ -11,24 +11,34 @@ class InputHandler(val gameHandler: GameHandler) {
         KeyCode.UP -> {
             gameHandler.attemptToMove(0, -1)
         }
+
         KeyCode.DOWN -> {
             gameHandler.gravityPeriod = GameHandler.FAST_DROP_SPEED
         }
+
         KeyCode.LEFT -> {
-            gameHandler.attemptToMove(0, -1)
+            gameHandler.attemptToMove(-1, 0)
         }
+
         KeyCode.RIGHT -> {
-            gameHandler.attemptToMove(0, -1)
+            gameHandler.attemptToMove(1, 0)
         }
+
         KeyCode.SPACE -> {
             if(isShiftPressed)
                 gameHandler.attemptToRotate(clockwise = false)
             else
                 gameHandler.attemptToRotate(clockwise = true)
         }
+
         KeyCode.SHIFT -> {
             isShiftPressed = true
         }
+
+        KeyCode.P -> {
+            GameHandler.isRunning = !GameHandler.isRunning
+        }
+
         else -> Any() // This is kind of weird, not sure how to handle it better
     }
 

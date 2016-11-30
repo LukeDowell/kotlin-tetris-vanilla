@@ -35,7 +35,6 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
     }
 
     fun update(delta: Long) {
-        // Drop block
         timeToDrop += delta
 
         if(timeToDrop >= gravityPeriod && isRunning) {
@@ -49,7 +48,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
 
                 var yValuesWithTetris = getYValuesWithTetris()
                 while (yValuesWithTetris.isNotEmpty()) {
-                    yValuesWithTetris.forEach { processTetrisAtY(it) } // TODO there is a bug here
+                    yValuesWithTetris.forEach { processTetrisAtY(it) }
                     yValuesWithTetris = getYValuesWithTetris()
                 }
 
@@ -81,7 +80,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
             .map { it.cells }
             .flatten()
             .filter { it.y < y }
-            .forEach { it.move(it.x, it.y + 1) }
+            .forEach { it.translate(0, 1) }
 
         score += TETRIS_SCORE_MULTIPLIER
     }

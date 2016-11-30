@@ -30,10 +30,7 @@ class Block(val blockType: BlockType, startingPosition: Point) : Cloneable {
 
     fun move(dx: Int, dy: Int) = cells.forEach { it.translate(dx, dy) }
 
-    fun intersectsWith(block : Block) : Boolean {
-        // Create a list of cells whose points are the same as any in our list of cells
-        return block.cells.filter { cells.contains(it) }.isNotEmpty()
-    }
+    fun intersectsWith(block : Block) : Boolean = block.cells.filter { cells.contains(it) }.isNotEmpty()
 
     /**
      *
@@ -62,7 +59,6 @@ class Block(val blockType: BlockType, startingPosition: Point) : Cloneable {
             rotationInstance.transform(cell, cell)
     }
 
-    // Is this is kind of weird, that you can modify the visibility of an interface method?
     public override fun clone(): Block {
         val clone = Block(blockType, Point(0,0))
         clone.cells.clear()

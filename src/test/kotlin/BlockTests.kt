@@ -15,11 +15,6 @@ class BlockTests {
                 `is`(iBlockMutableList)
         )
     }
-
-    @Test fun `i block cell rotation`() {
-        // TODO
-    }
-
     @Test fun `block should intersect`() {
         val iBlock = Block(BlockType.I, Point(4, 3))
         val zBlock = Block(BlockType.Z, Point(4, 3))
@@ -38,13 +33,5 @@ class BlockTests {
                 iBlock.intersectsWith(zBlock),
                 `is`(false)
         )
-    }
-
-    @Test fun `block should rotate`() {
-
-    }
-
-    @Test fun `block should not rotate`() {
-
     }
 }

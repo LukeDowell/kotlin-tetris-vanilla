@@ -26,8 +26,6 @@ class WorldRenderer(val tetrisWorld: TetrisWorld, val canvas: Canvas) {
     }
 
     fun drawBlock(g: GraphicsContext, block: Block) {
-
-
         block.cells.forEach {
             g.fill = block.blockType.color
             g.fillRect(
@@ -43,13 +41,6 @@ class WorldRenderer(val tetrisWorld: TetrisWorld, val canvas: Canvas) {
                     it.y * VISUAL_UNITS,
                     VISUAL_UNITS,
                     VISUAL_UNITS
-            )
-
-            g.fill = Color.WHITE
-            g.fillText(
-                    "${it.x} ${it.y}",
-                    it.x * VISUAL_UNITS,
-                    it.y * VISUAL_UNITS
             )
         }
     }

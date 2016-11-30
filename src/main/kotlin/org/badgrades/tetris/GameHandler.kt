@@ -3,7 +3,6 @@ package org.badgrades.tetris
 import org.badgrades.tetris.model.Block
 import org.badgrades.tetris.world.TetrisWorld
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Holds all of our game logic
@@ -19,7 +18,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         var score = 0
         var isRunning = false
 
-        const val FAST_DROP_SPEED = 200
+        const val FAST_DROP_SPEED = 100
         const val NORMAL_DROP_SPEED = 700
         const val TETRIS_SCORE_MULTIPLIER = 100
         const val QUEUE_SIZE = 40
@@ -65,7 +64,6 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
     }
 
     fun processTetrisAtY(y: Int) {
-        println("Processing tetris at ${y}")
         // Gather
         val cellsOnY = tetrisWorld.placedBlocks
             .map { it.cells }
@@ -82,8 +80,8 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         tetrisWorld.placedBlocks
             .map { it.cells }
             .flatten()
-            .filter { it.y >= y }
-            .forEach { it.move(it.x, (it.y-1)) }
+            .filter { it.y < y }
+            .forEach { it.move(it.x, it.y + 1) }
 
         score += TETRIS_SCORE_MULTIPLIER
     }
@@ -97,7 +95,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
 
     fun canDrop(block: Block) : Boolean {
         val blockClone = block.clone()
-        blockClone.move(0, -1)
+        blockClone.move(0, 1)
         return isBlockPositionValid(blockClone)
     }
 
@@ -113,9 +111,6 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         return false
     }
 
-    /**
-     * Wall kicks yo
-     */
     fun attemptToRotate(block: Block = tetrisWorld.playerBlock, clockwise: Boolean = true) : Boolean {
         val blockClone = block.clone()
         blockClone.rotate(clockwise)
@@ -136,7 +131,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         // Bounds
         block.cells.forEach {
             if(it.x > (TetrisWorld.GRID_WIDTH - 1)
-                    || it.y > (TetrisWorld.GRID_HEIGHT - 1)
+                    || it.y > TetrisWorld.GRID_HEIGHT - 1
                     || it.x < 0)
                 return false
         }
@@ -147,6 +142,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
                     if(block.intersectsWith(it))
                         return false
                 }
+
         return true
     }
 }

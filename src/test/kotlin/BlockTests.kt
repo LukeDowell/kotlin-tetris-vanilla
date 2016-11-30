@@ -19,8 +19,8 @@ class BlockTests {
     }
 
     @Test fun `i block cell initialization`() {
-        val iBlock = Block(BlockType.I, Point(1, 0))
-        val iBlockMutableList = mutableListOf(Point(1,0), Point(2,0), Point(3,0), Point(4,0))
+        val iBlock = Block(BlockType.I, Point(0, 1))
+        val iBlockMutableList = mutableListOf(Point(0,1), Point(0,2), Point(0,3), Point(0,4))
         assertThat(
                 iBlock.cells,
                 `is`(iBlockMutableList)
@@ -97,8 +97,6 @@ class BlockTests {
     }
 
     @Test fun `can detect tetris`() {
-        val rotatedIBlock = Block(BlockType.I, Point(7, 3))
-        rotatedIBlock.rotate(true)
 
         tetrisWorld.placedBlocks.addAll(listOf(
                 // First and second row
@@ -113,7 +111,7 @@ class BlockTests {
                 Block(BlockType.O, Point(2, 3)),
                 Block(BlockType.O, Point(4, 3)),
                 Block(BlockType.O, Point(6, 3)),
-                rotatedIBlock
+                Block(BlockType.I, Point(8, 2))
         ))
 
         assertThat(
@@ -121,9 +119,7 @@ class BlockTests {
                 `is`(2)
         )
 
-        val anotherIBlock = Block(BlockType.I, Point(8, 3))
-        anotherIBlock.rotate(true)
-        tetrisWorld.placedBlocks.add(anotherIBlock)
+        tetrisWorld.placedBlocks.add(Block(BlockType.I, Point(9, 2)))
 
         assertThat(
                 gameHandler.getYValuesWithTetris().size,

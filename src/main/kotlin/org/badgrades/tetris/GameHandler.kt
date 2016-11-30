@@ -88,7 +88,7 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
     fun getYValuesWithTetris() = (0..TetrisWorld.GRID_HEIGHT-1).filter { doesTetrisExistAtY(it) }
 
     fun doesTetrisExistAtY(y: Int) : Boolean {
-        val matrix = tetrisWorld.generateMatrix()
+        val matrix = tetrisWorld.generateMatrixFromPlacedBlocks()
         return (0..TetrisWorld.GRID_WIDTH-1).all { x -> matrix[x, y] == 1 }
     }
 
@@ -133,8 +133,8 @@ class GameHandler(val tetrisWorld: TetrisWorld) {
         // Bounds
         block.cells.forEach {
             if(it.x > (TetrisWorld.GRID_WIDTH - 1)
-                    || it.x < 0
-                    || it.y < 0)
+                    || it.y > TetrisWorld.GRID_HEIGHT
+                    || it.x < 0)
                 return false
         }
 

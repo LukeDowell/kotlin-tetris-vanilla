@@ -36,7 +36,7 @@ class TetrisWorld {
         const val GRID_WIDTH = 10
         val STARTING_POSITION = Point(
                 Math.round(GRID_WIDTH.toDouble() / 2).toInt(), // Kind of gross to have all this conversion
-                1
+                0 - GRID_BUFFER
         )
     }
 
@@ -44,7 +44,7 @@ class TetrisWorld {
      * Generates a 2d matrix representing the game field. a 0 is an empty cell while a
      * 1 is a cell occupied by a block
      */
-    fun generateMatrix() : Array2D<Int> {
+    fun generateMatrixFromPlacedBlocks() : Array2D<Int> {
         val matrix = Array2D<Int>(GRID_WIDTH, GRID_HEIGHT) { x, y -> 0 }
 
         placedBlocks.forEach { block ->
@@ -52,8 +52,6 @@ class TetrisWorld {
                 matrix[cell.x, cell.y] = 1
             }
         }
-
-        playerBlock.cells.forEach { matrix[it.x, it.y] = 1 }
 
         return matrix
     }

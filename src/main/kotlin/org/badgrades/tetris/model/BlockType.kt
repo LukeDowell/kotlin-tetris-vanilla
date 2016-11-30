@@ -22,9 +22,12 @@ import java.awt.Point
 enum class BlockType(val color: Color, val offsets: List<Point>) {
 
     /**
-     *  = + + +
+     *  =
+     *  +
+     *  +
+     *  +
      */
-    I(Color.CYAN, listOf(Point(1, 0), Point(2, 0), Point(3, 0))),
+    I(Color.CYAN, listOf(Point(0, 1), Point(0, 2), Point(0, 3))),
 
     /**
      *  =  +
